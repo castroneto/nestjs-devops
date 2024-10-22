@@ -10,6 +10,6 @@ export class LoginController {
 
     @Post('login')
     login() {
-        return { title: 'Minha página com componentes!' };
+        return { title: 'testing!' };
     }
 }

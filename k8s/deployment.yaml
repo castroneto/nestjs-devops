@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bitshopp-app
+  annotations:
+    azure.workload.identity/client-id: af8aef5d-27bf-44c0-a662-2aaa122e1842  # Inject the client ID here
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: bitshopp-app
+  template:
+    metadata:
+      labels:
+        app: bitshopp-app
+    spec:
+      containers:
+      - name: node-app
+        image: bitshoppacr.azurecr.io/bitshopp-app:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: PORT
+          value: "3000"
+        - name: PGHOST
+          value: "pgserver-bitshopp.privatelink.postgres.database.azure.com."
+        - name: PGUSER
+          value: "pgadmin"
+        - name: PGDATABASE
+          value: "bitshopp-db"
+        - name: PGPORT
+          value: "5432"
+        - name: KEY_VAULT_NAME
+          value: "bitshopp-infra-key-vault"
+        - name: KEY_VAULT_SECRET
+          value: "postgresql-password"
+      nodeSelector:
+        "kubernetes.io/os": linux

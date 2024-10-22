@@ -1,12 +1,12 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: bitshopp-app-hpa
+  name: bittest-app-hpa
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: bitshopp-app
+    name: bittest-app
   minReplicas: 2 
   maxReplicas: 20
   metrics:

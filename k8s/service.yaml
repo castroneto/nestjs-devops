@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: bitshopp-service
+  name: bittest-service
 spec:
   type: LoadBalancer
   selector:
-    app: bitshopp-app
+    app: bittest-app
   ports:
   - protocol: TCP
     port: 80

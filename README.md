@@ -24,6 +24,7 @@ Para fazer o deploy desse projeto rode
 | name  | nome do projeto |   evilcorp   |
 | location | Local onde os recursos serão provisionados.| australiacentral   |
 | subscription    | id da subscrição  |    |
+| resource_group  |  grupo de recursos |  rg-evilcorp |
 
 
 

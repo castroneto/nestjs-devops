@@ -5,8 +5,8 @@ resource "random_password" "postgresql_password" {
 
 resource "azurerm_postgresql_server" "postgresql" {
   name                         = "pgserver-${var.name}"
-  location                     = azurerm_resource_group.rg.location
-  resource_group_name          = azurerm_resource_group.rg.name
+  location                     = data.azurerm_resource_group.rg.location
+  resource_group_name          = data.azurerm_resource_group.rg.name
   administrator_login          = "pgadmin"
   administrator_login_password = random_password.postgresql_password.result
   sku_name                     = "GP_Gen5_2"
@@ -18,7 +18,7 @@ resource "azurerm_postgresql_server" "postgresql" {
 
 resource "azurerm_postgresql_database" "mydatabase" {
   name                = "${var.name}-db"
-  resource_group_name = azurerm_resource_group.rg.name
+  resource_group_name = data.azurerm_resource_group.rg.name
   server_name         = azurerm_postgresql_server.postgresql.name
   charset             = "UTF8"
   collation           = "en_US.UTF8"
@@ -26,17 +26,17 @@ resource "azurerm_postgresql_database" "mydatabase" {
 
 resource "azurerm_postgresql_firewall_rule" "allow_aks_subnet" {
   name                = "allow_aks_subnet"
-  resource_group_name = azurerm_resource_group.rg.name
+  resource_group_name = data.azurerm_resource_group.rg.name
   server_name         = azurerm_postgresql_server.postgresql.name
   start_ip_address    = "10.0.1.4"
   end_ip_address      = "10.0.1.254"
-  depends_on = [azurerm_resource_group.rg, azurerm_subnet.aks_subnet]
+  depends_on = [data.azurerm_resource_group.rg, azurerm_subnet.aks_subnet]
 }
 
 resource "azurerm_private_endpoint" "postgres" {
   name                = "private-endpoint-postgres"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
   subnet_id           = azurerm_subnet.aks_subnet.id
 
   private_service_connection {

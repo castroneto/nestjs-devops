@@ -8,8 +8,6 @@ provider "azurerm" {
   subscription_id = var.subscription
 }
 
-resource "azurerm_resource_group" "rg" {
-  name     = "rg-${var.name}-infra"
-  location = var.location
+data "azurerm_resource_group" "rg" {
+  name = var.resource_group
 }
-

@@ -1,7 +1,7 @@
 resource "azurerm_kubernetes_cluster" "aks" {
   name                      = "aks-cluster"
-  location                  = azurerm_resource_group.rg.location
-  resource_group_name       = azurerm_resource_group.rg.name
+  location                  = data.azurerm_resource_group.rg.location
+  resource_group_name       = data.azurerm_resource_group.rg.name
   dns_prefix                = "myakscluster"
   workload_identity_enabled = true
   oidc_issuer_enabled       = true
@@ -27,5 +27,5 @@ resource "azurerm_kubernetes_cluster" "aks" {
     dns_service_ip = "10.0.3.10"
   }
 
-  depends_on = [azurerm_resource_group.rg, azurerm_subnet.aks_subnet]
+  depends_on = [data.azurerm_resource_group.rg, azurerm_subnet.aks_subnet]
 }

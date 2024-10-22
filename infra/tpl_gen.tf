@@ -15,7 +15,7 @@ resource "local_file" "ci_cd_deploy" {
   content = templatefile("${path.module}/templates/deploy.tpl", {
     name = var.name,
     acr_name           = azurerm_container_registry.acr.name
-    resource_group_name = azurerm_resource_group.rg.name
+    resource_group_name = data.azurerm_resource_group.rg.name
     aks_cluster_name   = azurerm_kubernetes_cluster.aks.name
   })
   filename = "${path.module}/../.github/workflows/deploy.yml"

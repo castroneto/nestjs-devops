@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile  # Dockerfile está na raiz
+    ports:
+      - "8080:3000"  # Mapeia a porta 8080 no host para a porta 3000 no contêiner
+    environment:
+      - PORT=3000  # Define a porta para o aplicativo, caso seja configurável via variável de ambiente
+    restart: unless-stopped

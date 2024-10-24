@@ -60,3 +60,8 @@ infra/terraform.tfstate.backup
 
 infra/.terraform/
 infra/.terraform.lock.hcl
+
+k8s/deployment.yaml
+k8s/hpa.yaml
+k8s/service.yaml
+.github/workflows/deploy.yml

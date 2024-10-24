@@ -12,7 +12,7 @@ Para criar autenticação no azure
 ```bash
   az login
 ```
-Para fazer o deploy desse projeto rode
+Para fazer o deploy desse projeto
 
 ```bash
   terraform init
@@ -26,6 +26,22 @@ Para fazer o deploy desse projeto rode
 | subscription    | id da subscrição  |    |
 | resource_group  |  grupo de recursos |  rg-evilcorp |
 
+## Publicar uma Imagem Docker no Azure Container Registry
+```bash
+  cd ..
+  az acr login --name <NOME_DO_ACR>
+```
+Este comando autentica você no ACR usando o Azure CLI. O <NOME_DO_ACR> deve ser substituído pelo nome do seu registro no Azure. Após a autenticação, você poderá interagir com o ACR, como fazer o upload de imagens Docker.
+
+```bash
+  docker build -t <NOME_DO_ACR>.azurecr.io/<NOME_DA_IMAGEM>:latest .
+```
+Este comando cria uma imagem Docker a partir do seu projeto local. Ele utiliza o arquivo Dockerfile presente no diretório atual para construir a imagem. O nome da imagem é formatado para incluir o ACR onde ela será armazenada.
+
+```bash
+  docker push <NOME_DO_ACR>.azurecr.io/<NOME_DA_IMAGEM>:latest
+```
+Este comando faz o upload da imagem Docker que você acabou de construir para o ACR. Isso torna a imagem disponível no registro para ser utilizada por outros serviços, como o Kubernetes ou Azure App Services.
 
 
 ## Aplicação de manifestos no Kubernetes para configurar e gerenciar recursos no cluster.
@@ -48,6 +64,12 @@ Aplica as configurações do arquivo service.yaml, criando ou atualizando um Ser
   kubectl apply -f k8s/hpa.yaml
 ``` 
 Aplica as configurações do arquivo hpa.yaml para criar ou atualizar um Horizontal Pod Autoscaler (HPA), que ajusta automaticamente o número de réplicas dos pods com base no uso de recursos, como CPU ou memória.
+
+
+```bash
+  kubectl set image deployment/<NOME_DA_IMAGEM> node-app=<NOME_DO_ACR>.azurecr.io/<NOME_DA_IMAGEM>:latest
+``` 
+atualiza a imagem de um deployment no Kubernetes, substituindo a imagem existente por uma nova versão hospedada no Azure Container Registry (ACR).
 
 ```bash
   kubectl get service ${name}-service

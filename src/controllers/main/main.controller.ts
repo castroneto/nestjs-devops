@@ -5,6 +5,6 @@ export class MainController {
 
     @Get()
     hello(): string {
-        return "server on"
+        return "server bitshopp on"
     }
 }

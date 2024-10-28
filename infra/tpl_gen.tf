@@ -32,3 +32,10 @@ resource "local_file" "service" {
   })
   filename = "${path.module}/../k8s/service.yaml"
 }
+
+resource "local_file" "ingress" {
+  content = templatefile("${path.module}/templates/ingress.tpl", {
+    name = var.name
+  })
+  filename = "${path.module}/../k8s/ingress.yaml"
+}

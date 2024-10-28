@@ -65,6 +65,15 @@ Aplica as configurações do arquivo service.yaml, criando ou atualizando um Ser
 ``` 
 Aplica as configurações do arquivo hpa.yaml para criar ou atualizar um Horizontal Pod Autoscaler (HPA), que ajusta automaticamente o número de réplicas dos pods com base no uso de recursos, como CPU ou memória.
 
+```bash
+  kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
+``` 
+ instala o Ingress Controller NGINX no cluster Kubernetes.
+ 
+ ```bash
+   kubectl apply -f k8s/ingress.yaml
+``` 
+aplica as configurações definidas no arquivo ingress.yaml para criar um recurso de Ingress no cluster Kubernetes.
 
 ```bash
   kubectl set image deployment/<NOME_DA_IMAGEM> node-app=<NOME_DO_ACR>.azurecr.io/<NOME_DA_IMAGEM>:latest
@@ -72,7 +81,7 @@ Aplica as configurações do arquivo hpa.yaml para criar ou atualizar um Horizon
 atualiza a imagem de um deployment no Kubernetes, substituindo a imagem existente por uma nova versão hospedada no Azure Container Registry (ACR).
 
 ```bash
-  kubectl get service ${name}-service
+  kubectl get ingress ${name}-app-ingress
 ``` 
 Obter o ip publico do serviço
 

@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: ${name}-service
+  name: ${name}-headless-service
 spec:
-  type: LoadBalancer
+  clusterIP: None  # Isso define o serviço como headless
   selector:
     app: ${name}-app
   ports:
